@@ -8,6 +8,7 @@ def polygon(nodes):
         elif len(nodes) == 4:
             result = quadrilateral(nodes[0], nodes[1], nodes[2], nodes[3])
         else:
+            print("This is a large polygon")
             result = "Large Polygon"
         return result
     else:
