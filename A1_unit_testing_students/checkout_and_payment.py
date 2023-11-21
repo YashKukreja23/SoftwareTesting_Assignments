@@ -7,6 +7,7 @@ class User:
         self.name = name
         self.wallet = float(wallet)
 
+
 #Product class to represent product information
 class Product:
     def __init__(self, name, price, units):
