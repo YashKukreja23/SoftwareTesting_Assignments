@@ -1,4 +1,4 @@
-from login import login
+from login import login_or_register
 import re
 from checkout_and_payment import checkoutAndPayment
 import csv
@@ -32,7 +32,7 @@ def searchAndBuyProduct():
     marker = True
     #Login as a user
     while marker:
-        login_info = login()
+        login_info = login_or_register()
         if login_info is not None:
             marker = False
             break

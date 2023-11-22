@@ -1,4 +1,4 @@
-from login import login
+from login import login_or_register
 from products import *
 
 
