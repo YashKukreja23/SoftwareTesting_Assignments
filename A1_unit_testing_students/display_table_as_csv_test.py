@@ -69,6 +69,14 @@ def test_invalid_list_of_files(copy_csv_file):
     with pytest.raises(Exception):
         display_csv_as_table(['copy_products.csv'])
 
+def test_invalid_float(copy_csv_file):
+    with pytest.raises(Exception):
+        display_csv_as_table(0.5)
+
+def test_invalid_bool(copy_csv_file):
+    with pytest.raises(Exception):
+        display_csv_as_table(True)
+
 
 
 

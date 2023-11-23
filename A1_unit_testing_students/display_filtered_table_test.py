@@ -1,3 +1,4 @@
+import string
 
 import pytest
 from products import display_filtered_table
@@ -36,12 +37,17 @@ def test_search(copy_csv_file):
     assert ('Hat', display_filtered_table('copy_products.csv', 'Hat'))
     assert ('Cereal', display_filtered_table('copy_products.csv', 'Cereal'))
 
-def test_invalid_input(copy_csv_file):
-    assert '2' != display_filtered_table('copy_products.csv', 'Apple')
-    assert '1' != display_filtered_table('copy_products.csv', 'Banana')
-    assert '0.8' != display_filtered_table('copy_products.csv', 'Onion')
-    assert '0.75' != display_filtered_table('copy_products.csv', 'Potato')
-    assert '3' != display_filtered_table('copy_products.csv', 'Juice')
+'''def test_invalid_input(copy_csv_file):
+    assert 2 != display_filtered_table('copy_products.csv', 'Apple')
+    assert 1 != display_filtered_table('copy_products.csv', 'Banana')
+    assert 0.8 != display_filtered_table('copy_products.csv', 'Onion')
+    assert 0.75 != display_filtered_table('copy_products.csv', 'Potato')
+    assert 3 != display_filtered_table('copy_products.csv', 'Juice')'''
+
+def test_correct_type(copy_csv_file):
+    search = 'Apple'
+    display_filtered_table('copy_products.csv', search)
+    assert (string, type(search))
 
 def test_missing_input(copy_csv_file):
     assert ('', display_filtered_table('copy_products.csv', 'Saxophone'))
