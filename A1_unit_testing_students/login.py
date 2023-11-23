@@ -48,6 +48,6 @@ def login_or_register():
 
 
 # Test the login_or_register function
-user_info = login_or_register()
+'''user_info = login_or_register()
 if user_info:
-    print("User info:", user_info)
+    print("User info:", user_info)'''
