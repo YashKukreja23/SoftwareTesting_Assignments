@@ -243,5 +243,10 @@
     "username": "YashKukreja",
     "password": "Welcome@123",
     "wallet": 0
+  },
+  {
+    "username": "YashKukrejaST",
+    "password": "Testcase@12",
+    "wallet": 0
   }
 ]
