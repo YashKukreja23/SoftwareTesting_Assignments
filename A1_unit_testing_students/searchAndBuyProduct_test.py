@@ -24,6 +24,11 @@ def display_filtered_table_mock(mocker):
     return mocker.patch('products.display_filtered_table', return_value = None)
 
 @pytest.fixture
+def input_stub1(mocker):
+    values = ['all', 'y']
+    return mocker.patch("builtins.input", side_effects = values)
+
+@pytest.fixture
 def checkout_and_payment_mock(mocker):
     return mocker.patch('checkout_and_payment.checkoutAndPayment', return_value = None)
 
@@ -44,3 +49,4 @@ def test_checkout_and_payment(mocker):
     mocker.patch('checkout_and_payment.checkoutAndPayment', m)
     checkout_and_payment.checkoutAndPayment()
     m.assert_called_once()
+
