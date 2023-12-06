@@ -1,0 +1,163 @@
+1
+
+RED
+def testauthor1(setupdata):
+#Testonlysurnames.
+    ( Surname , FirstNames ) = bibtex.extractauthor(setupdata['simple_author_1'])
+    assert( Surname , FirstNames ) == ('Smith' , '')
+    ( Surname , FirstNames ) = bibtex.extractauthor(setupdata['simple_author_2'])
+    assert( Surname , FirstNames ) == ('Jones' , '')
+
+bibtex_test.py::testauthor1 FAILED                                       [100%]
+bibtex_test.py:16 (testauthor1)
+setupdata = {'author_1': 'John Smith', 'author_2': 'Bob Jones', 'author_3': 'Justin Kenneth Pearson', 'multiple_authors_1': 'Pearson, Justin and Jones, Bob', ...}
+
+    def testauthor1(setupdata):
+    #Testonlysurnames.
+>       ( Surname , FirstNames ) = bibtex.extractauthor(setupdata['simple_author_1'])
+E       TypeError: cannot unpack non-iterable NoneType object
+
+
+
+GREEN
+def extractauthor(str):
+    split = str.split()
+    return (split[0], '')
+
+
+
+2
+
+RED
+bibtex_test.py::testauthor2 FAILED                                       [100%]
+bibtex_test.py:23 (testauthor2)
+('John', '') != ('Smith', 'John')
+
+Expected :('Smith', 'John')
+Actual   :('John', '')
+<Click to see difference>
+
+setupdata = {'author_1': 'John Smith', 'author_2': 'Bob Jones', 'author_3': 'Justin Kenneth Pearson', 'multiple_authors_1': 'Pearson, Justin and Jones, Bob', ...}
+
+    def testauthor2(setupdata):
+    # T e s t s i m p l e f i r s t n a m e a u t h o r .
+        ( Surname , First ) = bibtex.extractauthor(setupdata['author_1'] )
+>       assert( Surname , First ) == ("Smith" , "John")
+E       AssertionError: assert ('John', '') == ('Smith', 'John')
+E         At index 0 diff: 'John' != 'Smith'
+E         Full diff:
+E         - ('Smith', 'John')
+E         + ('John', '')
+
+bibtex_test.py:27: AssertionError
+
+
+
+GREEN
+
+def extract_author(author_string):
+    split = author_string.split()
+    if len(split) == 1:  
+        return (split[0], '')
+    elif len(parts) == 2:  
+        return (split[-1], split[0])
+
+3
+
+RED
+
+bibtex_test.py::testauthor3 FAILED                                       [100%]
+bibtex_test.py:30 (testauthor3)
+('Kenneth', 'Justin') != ('Pearson', 'Justin Kenneth')
+
+Expected :('Pearson', 'Justin Kenneth')
+Actual   :('Kenneth', 'Justin')
+<Click to see difference>
+
+setupdata = {'author_1': 'John Smith', 'author_2': 'Bob Jones', 'author_3': 'Justin Kenneth Pearson', 'multiple_authors_1': 'Pearson, Justin and Jones, Bob', ...}
+
+    def testauthor3(setupdata):
+        ( Surname , First ) = bibtex.extractauthor( setupdata ['author_3' ] )
+>       assert ( Surname , First ) == ("Pearson" , "Justin Kenneth")
+E       AssertionError: assert ('Kenneth', 'Justin') == ('Pearson', 'Justin Kenneth')
+E         At index 0 diff: 'Kenneth' != 'Pearson'
+E         Full diff:
+E         - ('Pearson', 'Justin Kenneth')
+E         + ('Kenneth', 'Justin')
+
+bibtex_test.py:33: AssertionError
+
+
+GREEN
+
+def extractauthor(author_string):
+    split = author_string.split()
+    if len(split) == 1:
+        return (split[0], '')
+    elif len(split) == 2:
+        return (split[-1], split[0])
+    else:
+        return (split[-1], ' '.join(split[:-1]))
+
+
+4
+
+RED
+
+bibtex_test.py::testsurnamefirst FAILED                                  [100%]
+bibtex_test.py:34 (testsurnamefirst)
+('Kenneth', 'Pearson, Justin') != ('Pearson', 'Justin Kenneth')
+
+Expected :('Pearson', 'Justin Kenneth')
+Actual   :('Kenneth', 'Pearson, Justin')
+<Click to see difference>
+
+setupdata = {'author_1': 'John Smith', 'author_2': 'Bob Jones', 'author_3': 'Justin Kenneth Pearson', 'multiple_authors_1': 'Pearson, Justin and Jones, Bob', ...}
+
+    def testsurnamefirst(setupdata):
+        ( Surname , First ) = bibtex.extractauthor(setupdata['surname_first_1' ] )
+>       assert ( Surname , First ) == ("Pearson" , "Justin Kenneth")
+E       AssertionError: assert ('Kenneth', 'Pearson, Justin') == ('Pearson', 'Justin Kenneth')
+E         At index 0 diff: 'Kenneth' != 'Pearson'
+E         Full diff:
+E         - ('Pearson', 'Justin Kenneth')
+E         + ('Kenneth', 'Pearson, Justin')
+
+bibtex_test.py:37: AssertionError
+
+
+GREEN
+
+def extractauthor(author_string):
+    split = author_string.split(', ')
+    if len(split) == 1: 
+        split = author_string.split()
+        if len(split) == 1:
+            return (split[0], '')
+        elif len(split) == 2:
+            return (split[-1], split[0])
+        else:
+            return (split[-1], ' '.join(split[:-1]))
+    elif len(split) == 2:
+        return (split[0], split[1])
+
+
+5
+
+RED
+
+bibtex_test.py::testmultipleauthors FAILED                               [100%]
+bibtex_test.py:40 (testmultipleauthors)
+setupdata = {'author_1': 'John Smith', 'author_2': 'Bob Jones', 'author_3': 'Justin Kenneth Pearson', 'multiple_authors_1': 'Pearson, Justin and Jones, Bob', ...}
+
+    def testmultipleauthors (setupdata):
+        Authors = bibtex.extractauthors(setupdata['multiple_authors_1' ] )
+>       assert Authors [ 0 ] == ('Pearson' , 'Justin')
+E       TypeError: 'NoneType' object is not subscriptable
+
+bibtex_test.py:43: TypeError
+
+
+
+GREEN
+
