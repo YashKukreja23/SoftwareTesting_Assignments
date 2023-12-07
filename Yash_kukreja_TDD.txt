@@ -1,0 +1,106 @@
+Case 1 :
+# In bibtex.py
+def extract_author(author_str):
+    # Split the author_str into surname and firstnames
+    parts = author_str.split(', ')
+    return parts[0], parts[1] if len(parts) > 1 else ''
+
+def extract_authors(authors_str):
+    # Placeholder implementation
+    pass
+	
+	
+Case 2:
+def extract_author(author_str):
+    # Split the author_str into surname and firstnames
+    parts = author_str.split(', ')
+
+    if len(parts) == 2:
+        # Surname, Firstname format
+        return parts[0], parts[1]  # Return in the format (Surname, Firstname)
+    elif len(parts) == 1:
+        # Check for 'Firstname Surname' format
+        names = parts[0].split(' ')
+        if len(names) == 2:
+            return names[1], names[0]  # Return in the format (Surname, Firstname)
+        else:
+            return parts[0], ''  # Only surname is provided
+    else:
+        # Handle other cases by raising an exception for unexpected input
+        raise ValueError(f"Invalid author format: {author_str}")
+
+def extract_authors(authors_str):
+    # Placeholder implementation
+    pass
+	
+Case 3:
+
+def extract_author(author_str):
+    # Split the author_str into surname and firstnames
+    parts = author_str.split(' ')
+
+    if len(parts) > 1:
+        # Surname is the last word, and first names are the rest
+        surname = parts[-1]
+        firstnames = ' '.join(parts[:-1])
+        return surname, firstnames
+    else:
+        # Only one part provided, consider it as the surname
+        return parts[0], ''
+
+def extract_authors(authors_str):
+    # Placeholder implementation
+    pass
+
+
+Case 4:
+def extract_author(author_str):
+    # Split the author_str into surname and firstnames
+    parts = author_str.split(', ')
+
+    if len(parts) == 2:
+        # Surname, Firstname format
+        return parts[0], parts[1]  # Return in the format (Surname, Firstname)
+    elif len(parts) == 1:
+        # Check for 'Firstname Surname' format
+        names = parts[0].split(' ')
+        if len(names) > 1:
+            return names[-1], ' '.join(names[:-1])  # Return in the format (Surname, Firstname)
+        else:
+            return names[0], ''  # Only one part provided, consider it as the surname
+    else:
+        # Handle other cases by raising an exception for unexpected input
+        raise ValueError(f"Invalid author format: {author_str}")
+		
+def extract_authors(authors_str):
+    # Placeholder implementation
+    pass
+	
+Case 5:
+def extract_author(author_str):
+    # Split the author_str into surname and firstnames
+    parts = author_str.split(', ')
+
+    if len(parts) == 2:
+        # Surname, Firstname format
+        return parts[0], parts[1]  # Return in the format (Surname, Firstname)
+    elif len(parts) == 1:
+        # Check for 'Firstname Surname' format
+        names = parts[0].split(' ')
+        if len(names) > 1:
+            return names[-1], ' '.join(names[:-1])  # Return in the format (Surname, Firstname)
+        else:
+            return names[0], ''  # Only one part provided, consider it as the surname
+    else:
+        # Handle other cases by raising an exception for unexpected input
+        raise ValueError(f"Invalid author format: {author_str}")
+
+
+def extract_authors(authors_str):
+    # Split the authors_str into individual author strings
+    author_strings = authors_str.split(' and ')
+
+    # Extract authors using the extract_author function
+    authors = [extract_author(author) for author in author_strings]
+
+    return authors
