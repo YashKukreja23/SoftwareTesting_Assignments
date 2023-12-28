@@ -1,4 +1,53 @@
-Case 1 :
+RED 
+
+Test code.
+
+
+import main
+import pytest
+
+@pytest.fixture
+def setup_data():
+    return {
+        'simple_author_1': "Smith",
+        'simple_author_2': "Jones",
+        'author_1': "John Smith",
+        'author_2': "Bob Jones",
+        'author_3': "Justin Kenneth Pearson",
+        'surname_first_1': "Pearson, Justin Kenneth",
+        'surname_first_2': "Van Hentenryck, Pascal",
+        'multiple_authors_1': "Pearson, Justin and Jones, Bob"
+    }
+
+def test_author_surnames(setup_data):
+    (surname, firstnames) = main.extract_author(setup_data['simple_author_1'])
+    assert (surname, firstnames) == ('Smith', '')
+
+    (surname, firstnames) = main.extract_author(setup_data['simple_author_2'])
+    assert (surname, firstnames) == ('Jones', '')
+
+
+test_main.py F                                                                                                                                            [100%]
+
+=========================================================================== FAILURES =========================================================================== 
+_____________________________________________________________________ test_author_surnames _____________________________________________________________________ 
+
+setup_data = {'author_1': 'John Smith', 'author_2': 'Bob Jones', 'author_3': 'Justin Kenneth Pearson', 'multiple_authors_1': 'Pearson, Justin and Jones, Bob', ...}
+
+    def test_author_surnames(setup_data):
+>       (surname, firstnames) = main.extract_author(setup_data['simple_author_1'])
+E       TypeError: cannot unpack non-iterable NoneType object
+
+test_main.py:19: TypeError
+=================================================================== short test summary info ==================================================================== 
+FAILED test_main.py::test_author_surnames - TypeError: cannot unpack non-iterable NoneType object
+====================================================================== 1 failed in 0.06s ======================================================================= 
+
+
+GREEN
+
+To pass the test we write the following code
+
 # In bibtex.py
 def extract_author(author_str):
     # Split the author_str into surname and firstnames
@@ -6,101 +55,383 @@ def extract_author(author_str):
     return parts[0], parts[1] if len(parts) > 1 else ''
 
 def extract_authors(authors_str):
-    # Placeholder implementation
     pass
-	
-	
-Case 2:
+
+
+
+Test result:
+collected 1 item                                                                                                                                                 
+
+test_main.py .                                                                                                                                            [100%] 
+
+====================================================================== 1 passed in 0.02s ======================================================================= 
+
+
+RED
+
+Test code
+
+import main
+import pytest
+
+@pytest.fixture
+def setup_data():
+    return {
+        'simple_author_1': "Smith",
+        'simple_author_2': "Jones",
+        'author_1': "John Smith",
+        'author_2': "Bob Jones",
+        'author_3': "Justin Kenneth Pearson",
+        'surname_first_1': "Pearson, Justin Kenneth",
+        'surname_first_2': "Van Hentenryck, Pascal",
+        'multiple_authors_1': "Pearson, Justin and Jones, Bob"
+    }
+
+def test_author_surnames(setup_data):
+    (surname, firstnames) = main.extract_author(setup_data['simple_author_1'])
+    assert (surname, firstnames) == ('Smith', '')
+
+    (surname, firstnames) = main.extract_author(setup_data['simple_author_2'])
+    assert (surname, firstnames) == ('Jones', '')
+
+def test_author_simple_firstnames(setup_data):
+    (surname, first) = main.extract_author(setup_data['author_1'])
+    assert (surname, first) == ("Smith", "John")
+
+    (surname, first) = main.extract_author(setup_data['author_2'])
+    assert (surname, first) == ("Jones", "Bob")
+
+
+
+test_main.py .F                                                                                                                                           [100%]
+
+=========================================================================== FAILURES =========================================================================== 
+________________________________________________________________ test_author_simple_firstnames _________________________________________________________________ 
+
+setup_data = {'author_1': 'John Smith', 'author_2': 'Bob Jones', 'author_3': 'Justin Kenneth Pearson', 'multiple_authors_1': 'Pearson, Justin and Jones, Bob', ...}
+
+    def test_author_simple_firstnames(setup_data):
+        (surname, first) = main.extract_author(setup_data['author_1'])
+>       assert (surname, first) == ("Smith", "John")
+E       AssertionError: assert ('John Smith', '') == ('Smith', 'John')
+E         At index 0 diff: 'John Smith' != 'Smith'
+E         Use -v to get more diff
+
+test_main.py:27: AssertionError
+=================================================================== short test summary info ==================================================================== 
+FAILED test_main.py::test_author_simple_firstnames - AssertionError: assert ('John Smith', '') == ('Smith', 'John')
+================================================================= 1 failed, 1 passed in 0.05s ================================================================== 
+
+
+GREEN
+
+To pass the test we write the code:
+
 def extract_author(author_str):
-    # Split the author_str into surname and firstnames
     parts = author_str.split(', ')
 
     if len(parts) == 2:
-        # Surname, Firstname format
-        return parts[0], parts[1]  # Return in the format (Surname, Firstname)
+        return parts[0], parts[1]
     elif len(parts) == 1:
-        # Check for 'Firstname Surname' format
         names = parts[0].split(' ')
         if len(names) == 2:
-            return names[1], names[0]  # Return in the format (Surname, Firstname)
+            return names[1], names[0]
         else:
-            return parts[0], ''  # Only surname is provided
+            return parts[0], ''
     else:
-        # Handle other cases by raising an exception for unexpected input
         raise ValueError(f"Invalid author format: {author_str}")
 
 def extract_authors(authors_str):
-    # Placeholder implementation
     pass
-	
-Case 3:
+
+
+
+
+test_main.py ..                                                                                                                                           [100%] 
+
+====================================================================== 2 passed in 0.01s ======================================================================= 
+
+
+RED 
+
+Test Code
+
+
+import main
+import pytest
+
+@pytest.fixture
+def setup_data():
+    return {
+        'simple_author_1': "Smith",
+        'simple_author_2': "Jones",
+        'author_1': "John Smith",
+        'author_2': "Bob Jones",
+        'author_3': "Justin Kenneth Pearson",
+        'surname_first_1': "Pearson, Justin Kenneth",
+        'surname_first_2': "Van Hentenryck, Pascal",
+        'multiple_authors_1': "Pearson, Justin and Jones, Bob"
+    }
+
+def test_author_surnames(setup_data):
+    (surname, firstnames) = main.extract_author(setup_data['simple_author_1'])
+    assert (surname, firstnames) == ('Smith', '')
+
+def test_author_complex_name(setup_data):
+    (surname, first) = main.extract_author(setup_data['author_3'])
+    assert (surname, first) == ("Pearson", "Justin Kenneth")
+
+    (surname, firstnames) = main.extract_author(setup_data['simple_author_2'])
+    assert (surname, firstnames) == ('Jones', '')
+
+def test_author_simple_firstnames(setup_data):
+    (surname, first) = main.extract_author(setup_data['author_1'])
+    assert (surname, first) == ("Smith", "John")
+
+    (surname, first) = main.extract_author(setup_data['author_2'])
+    assert (surname, first) == ("Jones", "Bob")
+
+
+test_main.py .F.                                                                                                                                          [100%]
+
+=========================================================================== FAILURES =========================================================================== 
+___________________________________________________________________ test_author_complex_name ___________________________________________________________________ 
+
+setup_data = {'author_1': 'John Smith', 'author_2': 'Bob Jones', 'author_3': 'Justin Kenneth Pearson', 'multiple_authors_1': 'Pearson, Justin and Jones, Bob', ...}
+
+    def test_author_complex_name(setup_data):
+        (surname, first) = main.extract_author(setup_data['author_3'])
+>       assert (surname, first) == ("Pearson", "Justin Kenneth")
+E       AssertionError: assert ('Justin Kenneth Pearson', '') == ('Pearson', 'Justin Kenneth')
+E         At index 0 diff: 'Justin Kenneth Pearson' != 'Pearson'
+E         Use -v to get more diff
+
+test_main.py:24: AssertionError
+=================================================================== short test summary info ==================================================================== 
+FAILED test_main.py::test_author_complex_name - AssertionError: assert ('Justin Kenneth Pearson', '') == ('Pearson', 'Justin Kenneth')
+================================================================= 1 failed, 2 passed in 0.05s ================================================================== 
+
+GREEN
+
+Let us write the function to pass the test
 
 def extract_author(author_str):
-    # Split the author_str into surname and firstnames
     parts = author_str.split(' ')
 
     if len(parts) > 1:
-        # Surname is the last word, and first names are the rest
         surname = parts[-1]
         firstnames = ' '.join(parts[:-1])
         return surname, firstnames
     else:
-        # Only one part provided, consider it as the surname
         return parts[0], ''
 
 def extract_authors(authors_str):
-    # Placeholder implementation
     pass
 
 
-Case 4:
+test_main.py ...                                                                                                                                          [100%] 
+
+====================================================================== 3 passed in 0.00s ======================================================================= 
+
+RED
+
+Test code
+
+
+import main
+import pytest
+
+@pytest.fixture
+def setup_data():
+    return {
+        'simple_author_1': "Smith",
+        'simple_author_2': "Jones",
+        'author_1': "John Smith",
+        'author_2': "Bob Jones",
+        'author_3': "Justin Kenneth Pearson",
+        'surname_first_1': "Pearson, Justin Kenneth",
+        'surname_first_2': "Van Hentenryck, Pascal",
+        'multiple_authors_1': "Pearson, Justin and Jones, Bob"
+    }
+
+def test_author_surnames(setup_data):
+    (surname, firstnames) = main.extract_author(setup_data['simple_author_1'])
+    assert (surname, firstnames) == ('Smith', '')
+
+def test_author_complex_name(setup_data):
+    (surname, first) = main.extract_author(setup_data['author_3'])
+    assert (surname, first) == ("Pearson", "Justin Kenneth")
+
+    (surname, firstnames) = main.extract_author(setup_data['simple_author_2'])
+    assert (surname, firstnames) == ('Jones', '')
+
+def test_author_simple_firstnames(setup_data):
+    (surname, first) = main.extract_author(setup_data['author_1'])
+    assert (surname, first) == ("Smith", "John")
+
+    (surname, first) = main.extract_author(setup_data['author_2'])
+    assert (surname, first) == ("Jones", "Bob")
+
+def test_surname_first(setup_data):
+    (surname, first) = main.extract_author(setup_data['surname_first_1'])
+    assert (surname, first) == ("Pearson", "Justin Kenneth")
+
+    (surname, first) = main.extract_author(setup_data['surname_first_2'])
+    assert (surname, first) == ("Van Hentenryck", "Pascal")
+
+
+test_main.py ...F                                                                                                                                         [100%]
+
+=========================================================================== FAILURES =========================================================================== 
+______________________________________________________________________ test_surname_first ______________________________________________________________________ 
+
+setup_data = {'author_1': 'John Smith', 'author_2': 'Bob Jones', 'author_3': 'Justin Kenneth Pearson', 'multiple_authors_1': 'Pearson, Justin and Jones, Bob', ...}
+
+    def test_surname_first(setup_data):
+        (surname, first) = main.extract_author(setup_data['surname_first_1'])
+>       assert (surname, first) == ("Pearson", "Justin Kenneth")
+E       AssertionError: assert ('Kenneth', 'Pearson, Justin') == ('Pearson', 'Justin Kenneth')
+E         At index 0 diff: 'Kenneth' != 'Pearson'
+E         Use -v to get more diff
+
+test_main.py:38: AssertionError
+=================================================================== short test summary info ==================================================================== 
+FAILED test_main.py::test_surname_first - AssertionError: assert ('Kenneth', 'Pearson, Justin') == ('Pearson', 'Justin Kenneth')
+================================================================= 1 failed, 3 passed in 0.04s ================================================================== 
+
+
+GREEN 
+
+Let us change the function so it passes the test.
+
 def extract_author(author_str):
-    # Split the author_str into surname and firstnames
     parts = author_str.split(', ')
 
     if len(parts) == 2:
-        # Surname, Firstname format
-        return parts[0], parts[1]  # Return in the format (Surname, Firstname)
+        return parts[0], parts[1]
     elif len(parts) == 1:
-        # Check for 'Firstname Surname' format
         names = parts[0].split(' ')
         if len(names) > 1:
-            return names[-1], ' '.join(names[:-1])  # Return in the format (Surname, Firstname)
+            return names[-1], ' '.join(names[:-1])
         else:
-            return names[0], ''  # Only one part provided, consider it as the surname
+            return names[0], ''
     else:
-        # Handle other cases by raising an exception for unexpected input
         raise ValueError(f"Invalid author format: {author_str}")
-		
-def extract_authors(authors_str):
-    # Placeholder implementation
-    pass
-	
-Case 5:
+
+
+Output: 
+
+test_main.py ....                                                                                                                                         [100%] 
+
+====================================================================== 4 passed in 0.02s ======================================================================= 
+
+RED
+
+Test code
+
+
+import main
+import pytest
+
+@pytest.fixture
+def setup_data():
+    return {
+        'simple_author_1': "Smith",
+        'simple_author_2': "Jones",
+        'author_1': "John Smith",
+        'author_2': "Bob Jones",
+        'author_3': "Justin Kenneth Pearson",
+        'surname_first_1': "Pearson, Justin Kenneth",
+        'surname_first_2': "Van Hentenryck, Pascal",
+        'multiple_authors_1': "Pearson, Justin and Jones, Bob"
+    }
+
+def test_author_surnames(setup_data):
+    (surname, firstnames) = main.extract_author(setup_data['simple_author_1'])
+    assert (surname, firstnames) == ('Smith', '')
+
+def test_author_complex_name(setup_data):
+    (surname, first) = main.extract_author(setup_data['author_3'])
+    assert (surname, first) == ("Pearson", "Justin Kenneth")
+
+    (surname, firstnames) = main.extract_author(setup_data['simple_author_2'])
+    assert (surname, firstnames) == ('Jones', '')
+
+def test_author_simple_firstnames(setup_data):
+    (surname, first) = main.extract_author(setup_data['author_1'])
+    assert (surname, first) == ("Smith", "John")
+
+    (surname, first) = main.extract_author(setup_data['author_2'])
+    assert (surname, first) == ("Jones", "Bob")
+
+def test_surname_first(setup_data):
+    (surname, first) = main.extract_author(setup_data['surname_first_1'])
+    assert (surname, first) == ("Pearson", "Justin Kenneth")
+
+    (surname, first) = main.extract_author(setup_data['surname_first_2'])
+    assert (surname, first) == ("Van Hentenryck", "Pascal")
+
+def test_multiple_authors(setup_data):
+    authors = main.extract_authors(setup_data['multiple_authors_1'])
+    assert authors[0] == ('Pearson', 'Justin')
+    assert authors[1] == ('Jones', 'Bob')
+
+
+____________________________________________________________________ test_multiple_authors _____________________________________________________________________ 
+
+setup_data = {'author_1': 'John Smith', 'author_2': 'Bob Jones', 'author_3': 'Justin Kenneth Pearson', 'multiple_authors_1': 'Pearson, Justin and Jones, Bob', ...}
+
+    def test_multiple_authors(setup_data):
+>       authors = main.extract_authors(setup_data['multiple_authors_1'])
+E       AttributeError: module 'main' has no attribute 'extract_authors'
+
+test_main.py:44: AttributeError
+=================================================================== short test summary info ==================================================================== 
+FAILED test_main.py::test_multiple_authors - AttributeError: module 'main' has no attribute 'extract_authors'
+================================================================= 1 failed, 4 passed in 0.04s ================================================================== 
+
+
+GREEN
+
+Let us write the function which passes the new test case:
+
 def extract_author(author_str):
-    # Split the author_str into surname and firstnames
+
     parts = author_str.split(', ')
 
     if len(parts) == 2:
-        # Surname, Firstname format
-        return parts[0], parts[1]  # Return in the format (Surname, Firstname)
+        return parts[0], parts[1]  
     elif len(parts) == 1:
-        # Check for 'Firstname Surname' format
+        
         names = parts[0].split(' ')
         if len(names) > 1:
-            return names[-1], ' '.join(names[:-1])  # Return in the format (Surname, Firstname)
+            return names[-1], ' '.join(names[:-1])  
         else:
-            return names[0], ''  # Only one part provided, consider it as the surname
+            return names[0], ''  
     else:
-        # Handle other cases by raising an exception for unexpected input
+        
         raise ValueError(f"Invalid author format: {author_str}")
 
 
 def extract_authors(authors_str):
-    # Split the authors_str into individual author strings
+    
     author_strings = authors_str.split(' and ')
-
-    # Extract authors using the extract_author function
     authors = [extract_author(author) for author in author_strings]
-
     return authors
+
+test_main.py .....                                                                                                                                        [100%] 
+
+====================================================================== 5 passed in 0.01s ======================================================================= 
+
+
+
+
+
+
+
+
+
+
+
+
+
