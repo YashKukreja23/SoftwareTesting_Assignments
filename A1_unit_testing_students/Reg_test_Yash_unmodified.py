@@ -358,6 +358,8 @@ def invalid_input_while_checkout(mock_user, mock_product, mock_input):
     assert assert_thing is False
 
 
+
+
 #Login
 
 @pytest.fixture
@@ -403,5 +405,58 @@ def test_invalid_password_registration(open_file_stub, new_user_invalid_password
 
     assert user_info is None
     assert "Invalid password" in mock_print.mock_calls[0].args[0]
+
+import pytest
+from checkout_and_payment import User, Product, ShoppingCart, checkout
+
+
+@pytest.fixture
+def sample_user():
+    return User("John Doe", 50.0, ["8123 1232 1273 1238", "1234 5678 9012 3456"])
+
+@pytest.fixture
+def sample_cart():
+    cart = ShoppingCart()
+    product1 = Product("Laptop", 1200.0, 2)
+    product2 = Product("Mouse", 25.0, 5)
+    cart.add_item(product1)
+    cart.add_item(product2)
+    return cart
+
+def test_checkout_insufficient_wallet(sample_user, sample_cart, capsys, monkeypatch):
+    monkeypatch.setattr('builtins.input', lambda _: "wallet")
+    sample_user.wallet = 10.0  # Set wallet to an amount less than the cart total
+    checkout(sample_user, sample_cart)
+    captured = capsys.readouterr()
+    assert "You don't have enough money to complete the purchase." in captured.out
+
+def test_checkout_credit_card_valid(sample_user, sample_cart, capsys, monkeypatch):
+    # Set user's cards and actual initial wallet amount
+    sample_user.cards = ["1234 5678 9012 3456"]
+    actual_initial_wallet = sample_user.wallet
+
+    # Set input to simulate credit card payment
+    monkeypatch.setattr('builtins.input', lambda x: "credit" if "Select a card" in x else "1")
+
+    # Store the initial cart total for later comparison
+    initial_cart_total = sample_cart.get_total_price()
+
+    # Perform checkout
+    checkout(sample_user, sample_cart)
+
+    # Calculate the expected wallet amount after payment or if unsuccessful, remains unchanged
+    expected_wallet = actual_initial_wallet - initial_cart_total if "Thank you for your payment." in capsys.readouterr().out else actual_initial_wallet
+
+    # Check if the user's wallet is updated correctly
+    assert sample_user.wallet == expected_wallet
+
+
+def test_checkout_wallet_sufficient_funds(sample_user, sample_cart, capsys, monkeypatch):
+    monkeypatch.setattr('builtins.input', lambda _: "wallet")
+    checkout(sample_user, sample_cart)
+    captured = capsys.readouterr()
+    assert "You don't have enough money to complete the purchase." in captured.out
+    assert "Please try again!" in captured.out
+
 
 

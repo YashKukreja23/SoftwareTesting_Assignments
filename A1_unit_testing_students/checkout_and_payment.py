@@ -1,25 +1,26 @@
 import csv
 from logout import logout
 
-#User class to represent user information
+# User class to represent user information
 class User:
-    def __init__(self, name, wallet):
+    def __init__(self, name, wallet, cards=None):
         self.name = name
         self.wallet = float(wallet)
+        self.cards = cards if cards is not None else []
 
-
-#Product class to represent product information
+# Product class to represent product information
 class Product:
     def __init__(self, name, price, units):
         self.name = name
         self.price = float(price)
         self.units = int(units)
 
-#A method to get product details as a list
+    # A method to get product details as a list
     def get_product(self):
         return [self.name, self.price, self.units]
 
-#ShoppingCart class to represent the user's shopping cart
+
+# ShoppingCart class to represent the user's shopping cart
 class ShoppingCart:
     def __init__(self):
         self.items = []
@@ -44,6 +45,7 @@ class ShoppingCart:
     def get_total_price(self):
         return sum(item.price for item in self.items)
 
+
 # Function to load products from a CSV file
 def load_products_from_csv(file_path):
     products = []
@@ -53,38 +55,57 @@ def load_products_from_csv(file_path):
             products.append(Product(row['Product'], row['Price'], row['Units']))
     return products
 
+
 # Load products from the CSV file
-products= load_products_from_csv("products.csv")
+products = load_products_from_csv("products.csv")
 cart = ShoppingCart()
 
+
 # Function to complete the checkout process
-def checkout(user, cart):
+def checkout(user, cart, inputs=None):
+    if inputs is None:
+        inputs = input  # Use the default input function if not provided
+
     if not cart.items:
         print("\nYour basket is empty. Please add items before checking out.")
         return
 
     total_price = cart.get_total_price()
+    question_payment = inputs("Do you want to pay with wallet or credit card?")
+    if question_payment.lower() == "credit":
+        print("\nYour Cards:")
+        for i, card in enumerate(user.cards, start=1):
+            print(f"{i}. {card}")
 
-    if total_price > user.wallet:
-        print("\n")
-        print(f"You don't have enough money to complete the purchase.")
-        print("Please try again!")
-        return
+        while True:
+            try:
+                card_index = int(inputs("Select a card (enter the card number): ")) - 1
+                if 0 <= card_index < len(user.cards):
+                    print("Thank you for your payment.")
+                    break
+                else:
+                    print("Invalid card selection. Please choose a valid card.")
+            except ValueError:
+                print("Invalid input. Please enter a valid number.")
+    else:
+        if total_price > user.wallet:
+            print("\nYou don't have enough money to complete the purchase.")
+            print("Please try again!")
+        else:
+            # Deduct the total price from the user's wallet
+            user.wallet -= total_price
+            # Update product units and remove products with zero units
+            for item in cart.items:
+                item.units -= 1
+                if item.units == 0:
+                    products.remove(item)
+            # Clear the cart
+            cart.items = []
 
-    # Deduct the total price from the user's wallet
-    user.wallet -= total_price
-    # Update product units and remove products with zero units
-    for item in cart.items:
-        item.units -= 1
-        if item.units == 0:
-            products.remove(item)
-    # Clear the cart
-    cart.items = []
+            # Print a thank you message with the remaining balance
+            print("\nThank you for your purchase, {}! Your remaining balance is {}".format(user.name, user.wallet))
 
-    # Print a thank you message with the remaining balance
-    print("\n")
-    print(f"Thank you for your purchase, {user.name}! Your remaining balance is {user.wallet}")
-    
+
 # Function to check the cart and proceed to checkout if requested
 def check_cart(user, cart):
     # Print products in the cart
@@ -92,26 +113,31 @@ def check_cart(user, cart):
         print(i.get_product())
     # Ask the user if they want to checkout
     question = input("Do you want to checkout (Y/N)?")
-    if question.lower()  == "y":
-        return checkout(user,cart)
+    if question.lower() == "y":
+        return checkout(user, cart)
     else:
         return False
+
 
 # Main function for the shopping and checkout process
 def checkoutAndPayment(login_info):
     # Create/retrieve a user using login information
-    user = User(login_info["username"], login_info["wallet"])
+    username = login_info["username"]
+    wallet = login_info["wallet"]
+    cards = ["8123 1232 1273 1238", "1234 5678 9012 3456"]  # Hardcoded card details
+
+    user = User(username, wallet, cards)
+
     # Display available products
     for i, product in enumerate(products):
-        print(f"{i+1}. {product.name} - ${product.price} - Units: {product.units}")
-    
+        print(f"{i + 1}. {product.name} - ${product.price} - Units: {product.units}")
+
     while True:
-        
         # Get user input for product selection in numbers
         choice = input("\nEnter the product number you want to add to your cart (c to check cart, l to logout): ")
-        
+
         if choice == 'c':
-             # Check the cart and proceed to checkout if requested
+            # Check the cart and proceed to checkout if requested
             check = check_cart(user, cart)
             if check is False:
                 continue
@@ -133,4 +159,3 @@ def checkoutAndPayment(login_info):
                 print(f"Sorry, {selected_product.name} is out of stock.")
         else:
             print("\nInvalid input. Please try again.")
-

@@ -1,0 +1,53 @@
+Content of logfile1_Reg.txt
+
+============================= test session starts =============================
+platform win32 -- Python 3.9.13, pytest-7.4.3, pluggy-1.3.0
+rootdir: C:\Users\yashk\PycharmProjects\SoftwareTesting_Assignments\A1_unit_testing_students
+collected 17 items
+
+Reg_test_Yash_unmodified.py ..............EEE                            [100%]
+
+=================================== ERRORS ====================================
+_________________ ERROR at setup of test_checkout_credit_card _________________
+
+    @pytest.fixture
+    def sample_user():
+>       return User("John", 100, ["1234 5678 9012 3456"])
+E       TypeError: __init__() takes 3 positional arguments but 4 were given
+
+Reg_test_Yash_unmodified.py:411: TypeError
+_____________ ERROR at setup of test_checkout_insufficient_wallet _____________
+
+    @pytest.fixture
+    def sample_user():
+>       return User("John", 100, ["1234 5678 9012 3456"])
+E       TypeError: __init__() takes 3 positional arguments but 4 were given
+
+Reg_test_Yash_unmodified.py:411: TypeError
+______________ ERROR at setup of test_checkout_sufficient_wallet ______________
+
+    @pytest.fixture
+    def sample_user():
+>       return User("John", 100, ["1234 5678 9012 3456"])
+E       TypeError: __init__() takes 3 positional arguments but 4 were given
+
+Reg_test_Yash_unmodified.py:411: TypeError
+=========================== short test summary info ===========================
+ERROR Reg_test_Yash_unmodified.py::test_checkout_credit_card - TypeError: __i...
+ERROR Reg_test_Yash_unmodified.py::test_checkout_insufficient_wallet - TypeEr...
+ERROR Reg_test_Yash_unmodified.py::test_checkout_sufficient_wallet - TypeErro...
+======================== 14 passed, 3 errors in 0.13s =========================
+
+
+
+
+After making the new Implementation in Task 2 (Assignment 2) we have:
+Content of logfile2_Reg.txt
+============================= test session starts =============================
+platform win32 -- Python 3.9.13, pytest-7.4.3, pluggy-1.3.0
+rootdir: C:\Users\yashk\PycharmProjects\SoftwareTesting_Assignments\A1_unit_testing_students
+collected 17 items
+
+Reg_test_Yash_unmodified.py .................                            [100%]
+
+============================= 17 passed in 0.15s ==============================
