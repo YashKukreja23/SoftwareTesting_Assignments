@@ -1,0 +1,114 @@
+============================= test session starts =============================
+collecting ... collected 7 items
+
+smoke_testing_task1.py::test_end_to_end_check_empty_cart PASSED          [ 14%]
+smoke_testing_task1.py::test_end_to_end_shopping_not_buying PASSED       [ 28%]
+smoke_testing_task1.py::test_end_to_end_shopping_by_inputting_invalid_password FAILED [ 42%]
+smoke_testing_task1.py:81 (test_end_to_end_shopping_by_inputting_invalid_password)
+end_to_end_shopping_by_inputting_invalid_password = <list_iterator object at 0x000001AFF7CA45B0>
+
+    def test_end_to_end_shopping_by_inputting_invalid_password(end_to_end_shopping_by_inputting_invalid_password):
+        # Use monkeypatch to replace the input function during the test
+        with patch('builtins.print'):
+            with patch('builtins.print') as mock_print:
+                # Call the login function
+>               searchAndBuyProduct()
+
+smoke_testing_task1.py:87:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+products.py:35: in searchAndBuyProduct
+    login_info = login_or_register()
+login.py:14: in login_or_register
+    username = input("Enter your username:")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+prompt = 'Enter your username:'
+
+>   monkeypatch.setattr('builtins.input', lambda prompt: next(user_inputs))
+E   StopIteration
+
+smoke_testing_task1.py:39: StopIteration
+
+smoke_testing_task1.py::test_end_to_end_shopping_insufficient_funds FAILED [ 57%]
+smoke_testing_task1.py:90 (test_end_to_end_shopping_insufficient_funds)
+end_to_end_shopping_insufficient_funds = <list_iterator object at 0x000001AFF7D4FB80>
+
+    def test_end_to_end_shopping_insufficient_funds(end_to_end_shopping_insufficient_funds):
+        # Use monkeypatch to replace the input function during the test
+        with patch('builtins.print'):
+            with patch('builtins.print') as mock_print:
+                # Call the login function
+>               searchAndBuyProduct()
+
+smoke_testing_task1.py:96:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+products.py:49: in searchAndBuyProduct
+    checkoutAndPayment(login_info)
+checkout_and_payment.py:198: in checkoutAndPayment
+    choice = input("\nEnter the product number you want to add to your cart (c to check cart, l to logout): ")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+prompt = '\nEnter the product number you want to add to your cart (c to check cart, l to logout): '
+
+>   monkeypatch.setattr('builtins.input', lambda prompt: next(user_inputs))
+E   StopIteration
+
+smoke_testing_task1.py:59: StopIteration
+
+smoke_testing_task1.py::test_end_to_end_shopping_checking_out_empty_cart PASSED [ 71%]
+smoke_testing_task1.py::test_end_to_end_bad_registration FAILED          [ 85%]
+smoke_testing_task1.py:111 (test_end_to_end_bad_registration)
+end_to_end_bad_registration = <list_iterator object at 0x000001AFF7C9A4D0>
+
+    def test_end_to_end_bad_registration(end_to_end_bad_registration):
+        # Use monkeypatch to replace the input function during the test
+        with patch('builtins.print'):
+            with patch('builtins.print') as mock_print:
+                # Call the login function
+>               searchAndBuyProduct()
+
+smoke_testing_task1.py:117:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+products.py:35: in searchAndBuyProduct
+    login_info = login_or_register()
+login.py:14: in login_or_register
+    username = input("Enter your username:")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+prompt = 'Enter your username:'
+
+>   monkeypatch.setattr('builtins.input', lambda prompt: next(user_inputs))
+E   StopIteration
+
+smoke_testing_task1.py:45: StopIteration
+
+smoke_testing_task1.py::test_end_to_end_logging_out_with_cart FAILED     [100%]
+smoke_testing_task1.py:120 (test_end_to_end_logging_out_with_cart)
+end_to_end_logging_out_with_cart = <list_iterator object at 0x000001AFF7D5FE50>
+
+    def test_end_to_end_logging_out_with_cart(end_to_end_logging_out_with_cart):
+        # Use monkeypatch to replace the input function during the test
+        with patch('builtins.print'):
+            with patch('builtins.print') as mock_print:
+                # Call the login function
+>               searchAndBuyProduct()
+
+smoke_testing_task1.py:126:
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+products.py:49: in searchAndBuyProduct
+    checkoutAndPayment(login_info)
+checkout_and_payment.py:198: in checkoutAndPayment
+    choice = input("\nEnter the product number you want to add to your cart (c to check cart, l to logout): ")
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+prompt = '\nEnter the product number you want to add to your cart (c to check cart, l to logout): '
+
+>   monkeypatch.setattr('builtins.input', lambda prompt: next(user_inputs))
+E   StopIteration
+
+smoke_testing_task1.py:25: StopIteration
+
+
+========================= 4 failed, 3 passed in 0.09s =========================
+
+Process finished with exit code 1

@@ -4,5 +4,26 @@
     "password": "YashKukreja2!",
     "wallet": 200,
     "cards": ["8123 1232 1273 1238"]
+  },
+
+  {
+    "username": "Jorge",
+    "password": "passwrd1!",
+    "wallet": 200,
+    "cards": ["8123 1232 1273 1238"]
+  },
+
+  {
+    "username": "Gojo",
+    "password": "split50?",
+    "wallet": 0,
+    "cards": ["8123 1232 1273 1238"]
+  },
+
+  {
+    "username": "Hakari",
+    "password": "Gambl3r$",
+    "wallet": 300,
+    "cards": ["8123 1232 1273 1238"]
   }
 ]

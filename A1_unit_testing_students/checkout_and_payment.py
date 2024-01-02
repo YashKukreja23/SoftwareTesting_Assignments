@@ -167,7 +167,7 @@ def check_cart(user, cart):
             product_number = int(input("Enter the product number to remove: "))
             if 1 <= product_number <= len(cart.items):
                 removed_product = cart.items[product_number - 1]
-                cart.remove_item_from_cart(removed_product)
+                remove_item_from_cart(cart, removed_product)
             else:
                 print("Invalid product number.")
         elif question == 'c':
