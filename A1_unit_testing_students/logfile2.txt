@@ -1,0 +1,42 @@
+============================= test session starts =============================
+collecting ... collected 26 items
+
+regression_test_task1.py::test_out_of_stock PASSED                       [  3%]
+regression_test_task1.py::test_several_products PASSED                   [  7%]
+regression_test_task1.py::test_other_letter PASSED                       [ 11%]
+regression_test_task1.py::test_other_number PASSED                       [ 15%]
+regression_test_task1.py::test_add_item PASSED                           [ 19%]
+regression_test_task1.py::test_invalid_file PASSED                       [ 23%]
+regression_test_task1.py::test_invalid_file_input PASSED                 [ 26%]
+regression_test_task1.py::test_invalid_list_of_files PASSED              [ 30%]
+regression_test_task1.py::test_rows PASSED                               [ 34%]
+regression_test_task1.py::test_header PASSED                             [ 38%]
+regression_test_task1.py::test_not_exists PASSED                         [ 42%]
+regression_test_task1.py::test_exists PASSED                             [ 46%]
+regression_test_task1.py::test_invalid_float PASSED                      [ 50%]
+regression_test_task1.py::test_invalid_bool PASSED                       [ 53%]
+regression_test_task1.py::test_display_csv_valid_print PASSED            [ 57%]
+regression_test_task1.py::test_valid_registration PASSED                 [ 61%]
+regression_test_task1.py::test_invalid_password_registration PASSED      [ 65%]
+regression_test_task1.py::test_display_csv_as_table PASSED               [ 69%]
+regression_test_task1.py::test_display_filtered_table PASSED             [ 73%]
+regression_test_task1.py::test_checkout_and_payment PASSED               [ 76%]
+regression_test_task1.py::test_empty_file PASSED                         [ 80%]
+regression_test_task1.py::test_wrong_file PASSED                         [ 84%]
+regression_test_task1.py::test_load_products_with_values PASSED          [ 88%]
+regression_test_task1.py::test_remove_item_existant PASSED               [ 92%]product0 is not in your cart.
+
+Remaining items in your cart:
+
+regression_test_task1.py::test_remove_item_nonexistant PASSED            [ 96%]product1 is not in your cart.
+
+Remaining items in your cart:
+
+regression_test_task1.py::test_remove_item_empty PASSED                  [100%]product0 is not in your cart.
+
+Remaining items in your cart:
+
+
+============================= 26 passed in 0.08s ==============================
+
+Process finished with exit code 0
