@@ -19,6 +19,9 @@ class Product:
     def get_product(self):
         return [self.name, self.price, self.units]
 
+    def __str__(self):
+        return f'[{self.name}, {self.price}, {self.units}]'
+
 
 # ShoppingCart class to represent the user's shopping cart
 class ShoppingCart:
@@ -44,6 +47,13 @@ class ShoppingCart:
     # Method to calculate the total price of items in the cart
     def get_total_price(self):
         return sum(item.price for item in self.items)
+
+    # Method to display the items in the cart
+    def display_items(self):
+        for p in self.items:
+            print(p)
+        return self.items
+
 
 
 # Function to load products from a CSV file
