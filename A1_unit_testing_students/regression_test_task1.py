@@ -17,6 +17,7 @@ from unittest import mock
 import checkout_and_payment
 import products
 
+
 #Checkout and payment
 @pytest.fixture(scope='module')
 def user_dummmy_file():
@@ -312,3 +313,20 @@ def test_load_products_with_values():
     assert productsTest_values[0].price == 2
     assert productsTest_values[0].units == 10
 
+def test_remove_item_existant(mocker):
+    cart = ShoppingCart()
+    product = Product("product0", 10, 5)
+    cart.add_item(product)
+    mocker.patch('checkout_and_payment.get_item_cart', return_value=product)
+    assert remove_item_from_cart(cart, "product0")
+
+def test_remove_item_nonexistant(mocker):
+    cart = ShoppingCart()
+    cart.add_item(Product("product0", 10, 5))
+    mocker.patch('checkout_and_payment.get_item_cart', return_value=None)
+    assert remove_item_from_cart(cart, "product1")
+
+def test_remove_item_empty(mocker):
+    cart = ShoppingCart()
+    mocker.patch('checkout_and_payment.get_item_cart', return_value=None)
+    assert remove_item_from_cart(cart, "product0")

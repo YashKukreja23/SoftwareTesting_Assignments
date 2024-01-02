@@ -19,6 +19,9 @@ class Product:
     def get_product(self):
         return [self.name, self.price, self.units]
 
+    def increment_units(self):
+        self.units += 1
+
     def __str__(self):
         return f'[{self.name}, {self.price}, {self.units}]'
 
@@ -47,13 +50,6 @@ class ShoppingCart:
     # Method to calculate the total price of items in the cart
     def get_total_price(self):
         return sum(item.price for item in self.items)
-
-    # Method to display the items in the cart
-    def display_items(self):
-        for p in self.items:
-            print(p)
-        return self.items
-
 
 
 # Function to load products from a CSV file
@@ -117,7 +113,7 @@ def checkout(user, cart, inputs=None):
 
 
 # Function to check the cart and proceed to checkout if requested
-def check_cart(user, cart):
+'''def check_cart(user, cart):
     # Print products in the cart
     for i in cart.retrieve_item():
         print(i.get_product())
@@ -126,7 +122,62 @@ def check_cart(user, cart):
     if question.lower() == "y":
         return checkout(user, cart)
     else:
-        return False
+        return False'''
+
+
+def get_item_cart(cart, product_name):
+    for item in cart.items:
+        if item.name.lower() == product_name.lower():
+            return item
+    return None
+
+def remove_item_from_cart(self, product):
+    if product in self.items:
+        self.items.remove(product)
+        product.increment_units()
+        print(f"{product} removed from your cart.")
+    else:
+        print(f"{product} is not in your cart.")
+
+    print("\nRemaining items in your cart:")
+    for i in cart.retrieve_item():
+        print(i.get_product())
+
+    return True if product else False
+
+def check_cart(user, cart):
+    while True:
+        # Print products in the cart
+        for i, product in enumerate(cart.retrieve_item()):
+            print(f"{i + 1}. {product.name} - ${product.price} - Units: {product.units}")
+
+        # Ask the user if they want to query, remove, or checkout
+        question = input("Enter the product number to query (Q), remove (R), checkout (C), or go back (B): ").lower()
+
+        if question == 'q':
+            # Query individual item details
+            product_number = int(input("Enter the product number to query: "))
+            if 1 <= product_number <= len(cart.items):
+                queried_product = cart.items[product_number - 1]
+                print(f"{queried_product.name} - ${queried_product.price} - Units: {queried_product.units}")
+            else:
+                print("Invalid product number.")
+        elif question == 'r':
+            # Remove individual item from the cart
+            product_number = int(input("Enter the product number to remove: "))
+            if 1 <= product_number <= len(cart.items):
+                removed_product = cart.items[product_number - 1]
+                cart.remove_item_from_cart(removed_product)
+            else:
+                print("Invalid product number.")
+        elif question == 'c':
+            # Proceed to checkout
+            return checkout(user, cart)
+        elif question == 'b':
+            # Go back to product selection
+            break
+        else:
+            print("Invalid input. Please try again.")
 
 
 # Main function for the shopping and checkout process
